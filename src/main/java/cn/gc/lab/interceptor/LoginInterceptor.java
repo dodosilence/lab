@@ -11,19 +11,18 @@ import javax.servlet.http.HttpSession;
  * Created by tristan on 16/4/6.
  */
 public class LoginInterceptor implements HandlerInterceptor {
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object o) throws Exception {
 
-        HttpSession session = httpServletRequest.getSession();
+
+        HttpSession session = req.getSession();
         Object user = session.getAttribute("user");
-        if (user==null){
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/login");
+        if (user != null) {
             return true;
 
-        }else {
-            return true;
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/page-login.html");
+            return false;
         }
-
-
     }
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
