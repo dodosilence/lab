@@ -38,7 +38,7 @@ public class EntityTest {
     @Test
     @Transactional
     public void testCourse(){
-    	 Course course = courseRepository.findOneByTeacher_Courses_CourseNameIn(Arrays.asList("ss","dd"));
+    	 //Course course = courseRepository.findOneByTeacher_Courses_CourseNameIn(Arrays.asList("ss","dd"));
     	
     	
     }
