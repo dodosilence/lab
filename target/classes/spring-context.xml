@@ -61,7 +61,7 @@
     </bean>
 
     <!--使用注解事务-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
 
     <!--配置基于spring-data-jpa 的实现仓库-->
