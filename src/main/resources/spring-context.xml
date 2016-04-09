@@ -45,7 +45,7 @@
                 <!--sql语句格式化-->
                 <prop key="hibernate.format_sql">true</prop>
                 <!--数据库表的生成策略-->
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
             </props>
         </property>
     </bean>
