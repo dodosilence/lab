@@ -27,14 +27,14 @@ public class Equipment {
 
     private Integer borrowdCount;
 
-    @OneToMany(mappedBy = "equipment")
+    @OneToMany(mappedBy = "equipment",fetch = FetchType.EAGER)
     private Set<ProjectEquMap> projectEquMaps;
 
 
     private Double price;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Laboratory laboratory;
 
     public String getUuid() {

@@ -25,8 +25,27 @@ public class Manager {
 
     private String permission;
 
+    public String getUuid() {
+        return uuid;
+    }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 }

@@ -30,16 +30,16 @@ public class Laboratory {
     private Labstyle labstyle;
 
 
-    @OneToMany(mappedBy = "laboratory")
+    @OneToMany(mappedBy = "laboratory",fetch = FetchType.EAGER)
     private Set<Course> courses;
 
 
 
-    @OneToMany(mappedBy = "laboratory")
+    @OneToMany(mappedBy = "laboratory",fetch = FetchType.EAGER)
     private Set<Equipment> equipments;
 
 
-    @OneToMany(mappedBy = "laboratory")
+    @OneToMany(mappedBy = "laboratory",fetch = FetchType.EAGER)
     private Set<Module> modules;
 
 

@@ -2,6 +2,7 @@ package cn.gc.lab.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ public class User {
     private String uuid;
 
 
+    @Column(unique = true)
     private String username;
 
     private String password;

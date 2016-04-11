@@ -1,6 +1,7 @@
 package cn.gc.lab.interceptor;
 
 import cn.gc.lab.entity.User;
+import cn.gc.lab.exception.PermitionException;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,10 +16,11 @@ public class StudentInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object o) throws Exception {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
+
         if (user.getRole().equals("student")) {
             return true;
         } else {
-            return false;
+            throw new PermitionException("权限不足");
         }
     }
 

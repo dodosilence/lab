@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
  * Created by tristan on 16/4/6.
  */
 public class LoginInterceptor implements HandlerInterceptor {
+
+
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object o) throws Exception {
 
 

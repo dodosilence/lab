@@ -42,4 +42,12 @@ public class Teacher {
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -11,15 +11,15 @@
     <annotation-driven/>
     <!-- 静态资源不进行映射 -->
 
-    
+
 
     <default-servlet-handler/>
 
 
     <interceptors>
         <interceptor>
-            <mapping path="/*"/>
-            <exclude-mapping path="**/assets/**"/>
+            <mapping path="/**"/>
+            <exclude-mapping path="/assets/**"/>
             <exclude-mapping path="/page-login.html"/>
             <exclude-mapping path="/page-register.html"/>
             <exclude-mapping path="/login.do"/>
@@ -29,20 +29,20 @@
         </interceptor>
 
         <interceptor>
-            <mapping path="/teacher"/>
-            <exclude-mapping path="**/assets/**"/>
+            <mapping path="/teacher/**"/>
+            <exclude-mapping path="/assets/**"/>
             <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
             <beans:bean class="cn.gc.lab.interceptor.TeacherInterceptor"/>
         </interceptor>
         <interceptor>
-            <mapping path="/manager"/>
-            <exclude-mapping path="**/assets/**"/>
+            <mapping path="/mgr/**"/>
+            <exclude-mapping path="/assets/**"/>
             <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
             <beans:bean class="cn.gc.lab.interceptor.ManagerInterceptor"/>
         </interceptor>
         <interceptor>
-            <mapping path="/student"/>
-            <exclude-mapping path="**/assets/**"/>
+            <mapping path="/student/**"/>
+            <exclude-mapping path="/assets/**"/>
             <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
             <beans:bean class="cn.gc.lab.interceptor.StudentInterceptor"/>
         </interceptor>

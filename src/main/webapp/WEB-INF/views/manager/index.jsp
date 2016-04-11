@@ -26,7 +26,7 @@
 	<!-- Start: Content -->
 	<div class="container-fluid content">
 		<div class="row">
-			<c:import url="/WEB-INF/views/base/navigation.jsp"/>
+			<c:import url="/WEB-INF/views/manager/navigation.jsp"/>
 			<!-- Main Page -->
 			<div class="main ">
 				<!-- Page Header -->

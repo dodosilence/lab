@@ -1,6 +1,7 @@
 package cn.gc.lab.interceptor;
 
 import cn.gc.lab.entity.User;
+import cn.gc.lab.exception.PermitionException;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,7 +19,7 @@ public class ManagerInterceptor implements HandlerInterceptor {
         if (user.getRole().equals("manager")) {
             return true;
         } else {
-            return false;
+            throw new PermitionException("权限不足");
         }
 
     }

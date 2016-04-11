@@ -1,11 +1,6 @@
-import cn.gc.lab.entity.Course;
-import cn.gc.lab.entity.Laboratory;
-import cn.gc.lab.entity.Manager;
-import cn.gc.lab.entity.User;
-import cn.gc.lab.repository.CourseRepository;
-import cn.gc.lab.repository.ManagerRepository;
+import cn.gc.lab.entity.*;
+import cn.gc.lab.repository.*;
 
-import cn.gc.lab.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,27 +23,55 @@ public class EntityTest {
     private ManagerRepository managerRepository;
 
     @Test
-    public void init(){
+    public void init() {
 
         List<Manager> all = managerRepository.findAll();
 
     }
-    
-    
-    @Autowired 
+
+
+    @Autowired
     CourseRepository courseRepository;
 
     @Autowired
     UserRepository userRepository;
+
     @Test
-    public void testCourse(){
-    	 //Course course = courseRepository.findOneByTeacher_Courses_CourseNameIn(Arrays.asList("ss","dd"));
+    public void testCourse() {
+        //Course course = courseRepository.findOneByTeacher_Courses_CourseNameIn(Arrays.asList("ss","dd"));
         User user = new User();
         user.setUsername("username");
         user.setPassword("password");
         user.setTruename("ssss");
 
         userRepository.save(user);
+
+
+    }
+
+    @Autowired
+    LabstyleRepository labstyleRepository;
+
+    @Test
+    public void insertStyle() {
+        Labstyle labstyle = new Labstyle();
+        labstyle.setStyleName("其他实验室");
+        labstyleRepository.save(labstyle);
+    }
+
+    @Autowired
+    LaboratoryRepository laboratoryRepository;
+
+    @Test
+    public void inserLab(){
+        Labstyle labstyle = labstyleRepository.findOne("402881885405c8b0015405c8ba090000");
+
+
+        Laboratory laboratory = new Laboratory();
+        laboratory.setLabName("物理实验室");
+        laboratory.setPosition("四楼402");
+        laboratory.setLabstyle(labstyle);
+        Laboratory save = laboratoryRepository.save(laboratory);
 
 
     }

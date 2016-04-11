@@ -2,9 +2,8 @@ package cn.gc.lab.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * 实验室分类
@@ -19,6 +18,17 @@ public class Labstyle {
 
     private String styleName;
 
+    @OneToMany(mappedBy = "labstyle",fetch = FetchType.EAGER)
+    protected Set<Laboratory> laboratorys;
+
+
+    public Set<Laboratory> getLaboratorys() {
+        return laboratorys;
+    }
+
+    public void setLaboratorys(Set<Laboratory> laboratorys) {
+        this.laboratorys = laboratorys;
+    }
 
     public String getUuid() {
         return uuid;
@@ -35,4 +45,5 @@ public class Labstyle {
     public void setStyleName(String styleName) {
         this.styleName = styleName;
     }
+
 }
