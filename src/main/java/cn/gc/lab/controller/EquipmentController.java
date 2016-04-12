@@ -22,6 +22,11 @@ public class EquipmentController {
 
 
 
+
+
+
+
+    
     @RequestMapping("list/all")
     public String equipListAll(Model model){
         List<Equipment> equipments = equipmentRepository.findAll();
