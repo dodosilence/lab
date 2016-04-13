@@ -21,7 +21,7 @@
 
 
         <!-- Spring -->
-        <spring-framework.version>4.2.4.RELEASE</spring-framework.version>
+        <spring-framework.version>4.2.5.RELEASE</spring-framework.version>
 
 
         <!-- Logging -->
