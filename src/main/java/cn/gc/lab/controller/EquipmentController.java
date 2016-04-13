@@ -20,13 +20,6 @@ public class EquipmentController {
     @Autowired
     EquipmentRepository equipmentRepository;
 
-
-
-
-
-
-
-
     @RequestMapping("list/all")
     public String equipListAll(Model model){
         List<Equipment> equipments = equipmentRepository.findAll();

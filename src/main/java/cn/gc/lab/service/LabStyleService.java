@@ -21,4 +21,14 @@ public class LabStyleService {
         return labstyleRepository.findAll();
     }
 
+    @Transactional
+    public boolean save(Labstyle labstyle) {
+        Labstyle save = labstyleRepository.save(labstyle);
+
+        if (save!=null){
+            return  true;
+        }else {
+            return false;
+        }
+    }
 }

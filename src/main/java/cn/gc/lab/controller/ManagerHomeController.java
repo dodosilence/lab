@@ -24,12 +24,7 @@ public class ManagerHomeController {
         return "manager/index";
     }
 
-    @RequestMapping("labstyle.html")
-    public String labstyle(Model model) {
-        List<Labstyle> labstyles = labStyleService.findAllLabstyle();
-        model.addAttribute("labstyles",labstyles);
-        return "manager/labstyle/labstyle";
-    }
+
 
 
 }
