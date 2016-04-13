@@ -8,47 +8,55 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!-- Enables the Spring MVC @Controller programming model -->
-    <annotation-driven/>
+    <annotation-driven content-negotiation-manager="contentNegotiationManager" />
+    <beans:bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <beans:property name="favorPathExtension" value="false" />
+        <beans:property name="favorParameter" value="false" />
+        <beans:property name="ignoreAcceptHeader" value="false" />
+        <beans:property name="mediaTypes" >
+            <beans:value>
+                atom=application/atom+xml
+                html=text/html
+                json=application/json
+                *=*/*
+            </beans:value>
+        </beans:property>
+    </beans:bean>
     <!-- 静态资源不进行映射 -->
-
-
-
     <default-servlet-handler/>
+    <!--<interceptors>-->
+        <!--<interceptor>-->
+            <!--<mapping path="/**"/>-->
+            <!--<exclude-mapping path="/assets/**"/>-->
+            <!--<exclude-mapping path="/page-login.html"/>-->
+            <!--<exclude-mapping path="/page-register.html"/>-->
+            <!--<exclude-mapping path="/login.do"/>-->
+
+            <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+            <!--<beans:bean class="cn.gc.lab.interceptor.LoginInterceptor"/>-->
+        <!--</interceptor>-->
+
+        <!--<interceptor>-->
+            <!--<mapping path="/teacher/**"/>-->
+            <!--<exclude-mapping path="/assets/**"/>-->
+            <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+            <!--<beans:bean class="cn.gc.lab.interceptor.TeacherInterceptor"/>-->
+        <!--</interceptor>-->
+        <!--<interceptor>-->
+            <!--<mapping path="/mgr/**"/>-->
+            <!--<exclude-mapping path="/assets/**"/>-->
+            <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+            <!--<beans:bean class="cn.gc.lab.interceptor.ManagerInterceptor"/>-->
+        <!--</interceptor>-->
+        <!--<interceptor>-->
+            <!--<mapping path="/student/**"/>-->
+            <!--<exclude-mapping path="/assets/**"/>-->
+            <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
+            <!--<beans:bean class="cn.gc.lab.interceptor.StudentInterceptor"/>-->
+        <!--</interceptor>-->
 
 
-    <interceptors>
-        <interceptor>
-            <mapping path="/**"/>
-            <exclude-mapping path="/assets/**"/>
-            <exclude-mapping path="/page-login.html"/>
-            <exclude-mapping path="/page-register.html"/>
-            <exclude-mapping path="/login.do"/>
-
-            <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-            <beans:bean class="cn.gc.lab.interceptor.LoginInterceptor"/>
-        </interceptor>
-
-        <interceptor>
-            <mapping path="/teacher/**"/>
-            <exclude-mapping path="/assets/**"/>
-            <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-            <beans:bean class="cn.gc.lab.interceptor.TeacherInterceptor"/>
-        </interceptor>
-        <interceptor>
-            <mapping path="/mgr/**"/>
-            <exclude-mapping path="/assets/**"/>
-            <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-            <beans:bean class="cn.gc.lab.interceptor.ManagerInterceptor"/>
-        </interceptor>
-        <interceptor>
-            <mapping path="/student/**"/>
-            <exclude-mapping path="/assets/**"/>
-            <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-            <beans:bean class="cn.gc.lab.interceptor.StudentInterceptor"/>
-        </interceptor>
-
-
-    </interceptors>
+    <!--</interceptors>-->
 
 
     <!-- jsp的视图解析器 -->

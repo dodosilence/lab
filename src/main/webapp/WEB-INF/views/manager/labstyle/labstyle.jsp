@@ -59,9 +59,117 @@
 </div>
 <!--/container-->
 
+<!-- Footer -->
+<!-- Start: Content -->
+<div class="container-fluid content">
+    <div id="footer">
+        <ul>
+            <li>
+                <div class="title">Memory</div>
+                <div class="bar">
+                    <div class="progress light progress-sm  progress-striped active">
+                        <div class="progress-bar progress-squared progress-bar-success" role="progressbar"
+                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            60%
+                        </div>
+                    </div>
+                </div>
+                <div class="desc">4GB of 8GB</div>
+            </li>
+            <li>
+                <div class="title">HDD</div>
+                <div class="bar">
+                    <div class="progress light progress-sm  progress-striped active">
+                        <div class="progress-bar progress-squared progress-bar-primary" role="progressbar"
+                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+                            40%
+                        </div>
+                    </div>
+                </div>
+                <div class="desc">250GB of 1TB</div>
+            </li>
+            <li>
+                <div class="title">SSD</div>
+                <div class="bar">
+                    <div class="progress light progress-sm  progress-striped active">
+                        <div class="progress-bar progress-squared progress-bar-warning" role="progressbar"
+                             aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+                            70%
+                        </div>
+                    </div>
+                </div>
+                <div class="desc">700GB of 1TB</div>
+            </li>
+            <li>
+                <div class="pull-right">
+                    <button class="btn small btn-primary  bk-padding-right-10 bk-padding-left-10 bk-margin-off" data-toggle="modal" data-target="#myModal">新建</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    function addLabstyle() {
+        if (!$("#styleName").attr("value").length < 1) {
+            $.ajax({
 
-<div class="clearfix"></div>
+                type: "POST",
 
+                url: "${pageContext.request.contextPath}/mgr/labstyle/create.html",
+                data: {
+                    styleName: $("#styleName").attr("value"),
+                    format: 'json'
+                },
+                success: function (data, textStatus) {
+                    $("#myModal").modal("hide")
+                    alert(data.message)
+                    location.reload();
+
+                },
+
+                complete: function (XMLHttpRequest, textStatus) {
+
+                },
+                error: function () {
+
+                }
+            });
+
+
+        } else {
+            alert("名称不可为空")
+        }
+
+    }
+</script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body"><br>
+                <label>用户名</label>
+                <div class="input-group input-group-icon">
+                    <input type="text" name="username" class="form-control bk-radius"
+                           id="styleName" placeholder="Username or E-mail"/>
+                    <span class="input-group-addon">
+                        <span class="icon">
+						    <i class="fa fa-warning"></i>
+                       </span>
+					</span>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-in" onclick="addLabstyle()">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 
 <!-- start: JavaScript-->
