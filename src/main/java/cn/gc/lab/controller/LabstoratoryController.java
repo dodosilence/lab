@@ -1,8 +1,10 @@
 package cn.gc.lab.controller;
 
+import cn.gc.lab.entity.Equipment;
 import cn.gc.lab.entity.Laboratory;
 import cn.gc.lab.repository.LaboratoryRepository;
 import cn.gc.lab.service.LaboratoryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +42,7 @@ public class LabstoratoryController {
         return "manager/labs";
     }
 
-
+    
     @RequestMapping("delete/{labId}")
     @ResponseBody
     public Object deleteLab(@PathVariable("labId") String labId){

@@ -67,7 +67,7 @@ public class CommonLoginController {
     @Transactional
     private void initOneUser() {
 
-
+        //设置管理员登陆的用户和密码    用户名：manager 密码：root
         User man = userRepository.findOneByUsername("manager");
         if (man == null) {
             Manager manager = new Manager();
@@ -80,6 +80,8 @@ public class CommonLoginController {
             managerRepository.save(manager);
 
         }
+        
+       //设置学生登陆的用户和密码    用户名：student 密码：root
         User stu = userRepository.findOneByUsername("student");
         if (stu == null) {
             Student student = new Student();
@@ -89,8 +91,9 @@ public class CommonLoginController {
             user1.setRole("student");
             userRepository.save(user1);
             studentRepository.save(student);
-
         }
+        
+        //设置教师登陆的用户和密码    用户名：teacher 密码：root
         User tea = userRepository.findOneByUsername("teacher");
         if (tea == null) {
             Teacher teacher = new Teacher();

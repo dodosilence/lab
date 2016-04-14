@@ -1,7 +1,9 @@
 package cn.gc.lab.controller;
 
 import cn.gc.lab.entity.Equipment;
+import cn.gc.lab.entity.Laboratory;
 import cn.gc.lab.repository.EquipmentRepository;
+
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,4 +28,5 @@ public class EquipmentController {
         model.addAttribute("equitments",equipments);
         return "manager/equipment/equipment";
     }
+    
 }
