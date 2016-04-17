@@ -16,7 +16,6 @@ public class LaboratoryService {
 
     @Autowired
     LaboratoryRepository laboratoryRepository;
-    
     @Transactional
     public List<Laboratory> findLabsByLabStyle(String labstyle){
 
