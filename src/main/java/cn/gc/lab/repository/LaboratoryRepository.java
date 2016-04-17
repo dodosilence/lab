@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface LaboratoryRepository extends JpaRepository<Laboratory, String>, JpaSpecificationExecutor<Laboratory> {
     List<Laboratory> findByLabstyle_Uuid(String labstyleUuid);
+
+
 }

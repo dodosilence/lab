@@ -27,12 +27,7 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private Set<ProjectEquMap> projectEquMaps;
 
-
-
-
     private Date startDateTime;
-
-
 
     private Date endDateTime;
 

@@ -22,12 +22,12 @@ public class ProjectEquMap {
     @ManyToOne
     private Project project;
 
-
     @ManyToOne
     private Equipment equipment;
 
-
     private Integer count;
+
+    private Integer status;
 
 
 

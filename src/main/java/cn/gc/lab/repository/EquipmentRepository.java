@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.List;
 
 public interface EquipmentRepository extends  JpaRepository<Equipment, String>,JpaSpecificationExecutor<Equipment>{
-	
-	
+
+
+    List<Equipment> findByLaboratory_Uuid(String uuid);
 }

@@ -10,7 +10,7 @@ import java.util.Set;
  * 设备
  * Created by tristan on 16/4/6.
  */
-@Entity(name="EQUIPMENT")
+@Entity(name = "EQUIPMENT")
 public class Equipment {
     @Id
     @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -20,14 +20,13 @@ public class Equipment {
 
     private String eName;
 
-    private Integer usefullCount;
+    private Integer usefullCount=0;
 
+    private Integer brokenCount=0;
 
-    private Integer brokenCount;
+    private Integer borrowdCount=0;
 
-    private Integer borrowdCount;
-
-    @OneToMany(mappedBy = "equipment",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "equipment", fetch = FetchType.EAGER)
     private Set<ProjectEquMap> projectEquMaps;
 
 

@@ -31,8 +31,10 @@ public class HomePageController {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             if ("manager".equals(user.getRole())) {
+
                 homePage = "redirect:mgr/index.html";
             } else if ("teacher".equals(user.getRole())) {
+
                 homePage = "redirect:teacher/index.html";
             } else {
                 homePage = "redirect:student/index.html";

@@ -87,14 +87,14 @@
                     <div class="panel-body text-center">
                         <div class="flag"></div>
                     </div>
-                    <li class="active"><a href="../index.jsp"> <i
+                    <li class="active"><a href="${pageContext.request.contextPath}/mgr/index.html"> <i
                             class="fa fa-laptop" aria-hidden="true"></i><span>总体预览</span>
                     </a></li>
                     <li class="nav-parent"><a> <i class="fa fa-list-alt"
                                                   aria-hidden="true"></i><span>实验室</span>
                     </a>
                         <ul class="nav nav-children">
-                            <li><a href="${pageContext.request.contextPath}/mgr/labstyle.html"><span class="text">
+                            <li><a href="${pageContext.request.contextPath}/mgr/labstyle/list/all"><span class="text">
 										实验室分类</span></a></li>
                             <li><a href="${pageContext.request.contextPath}/mgr/labs/list/all"><span class="text">
 										实验室列表</span></a></li>
