@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
-/**项目
+/**
+ * 项目
  * Created by tristan on 16/4/6.
  */
 @Entity(name = "PROJECT")
@@ -24,15 +25,44 @@ public class Project {
     private Course course;
 
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private Set<ProjectEquMap> projectEquMaps;
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Set<ProjectEquMap> getProjectEquMaps() {
+        return projectEquMaps;
+    }
+
+    public void setProjectEquMaps(Set<ProjectEquMap> projectEquMaps) {
+        this.projectEquMaps = projectEquMaps;
+    }
+
+    public Date getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(Date startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public Date getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(Date endDateTime) {
+        this.endDateTime = endDateTime;
+    }
 
     private Date startDateTime;
 
     private Date endDateTime;
-
-
-
 
 
     public String getUuid() {

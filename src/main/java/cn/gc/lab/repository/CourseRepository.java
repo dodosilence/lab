@@ -13,8 +13,8 @@ public interface CourseRepository  extends  JpaRepository<Course, String>,JpaSpe
 	
 	
 	public Course findOneByTeacher_User_Username(String username);
-	
-	
+
+
 	public Course findOneByTeacher_Courses_CourseNameIn(List<String> courseNames);
 	
 	

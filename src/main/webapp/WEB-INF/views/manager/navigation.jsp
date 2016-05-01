@@ -106,37 +106,22 @@
                                                   aria-hidden="true"></i><span>课程系统</span>
                     </a>
                         <ul class="nav nav-children">
-                            <li><a href="${pageContext.request.contextPath}/ShowAllUserServlet"><span class="text">
+                            <li><a href="${pageContext.request.contextPath}/mgr/course/list/all"><span class="text">
 										课程管理</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/UserDeleteservlet"><span class="text">
+                            <li><a href="${pageContext.request.contextPath}/mgr/project/list/all"><span class="text">
 										实验列表</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/UserUpdateServlet"><span class="text">
-										项目管理</span></a></li>
                         </ul>
                     </li>
-                    <li class="nav-parent"><a> <i class="fa fa-list-alt"
-                                                  aria-hidden="true"></i><span>实验课程管理</span>
-                    </a>
-                        <ul class="nav nav-children">
-                            <li><a href="${pageContext.request.contextPath}/GoodsShowAllServlet"><span class="text">
-										所有货物</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/StockServlet"><span class="text">
-										进货</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/OutServlet"><span class="text">
-										出货</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/GoodsUpdateServlet"><span class="text">
-										更新</span></a></li>
-                        </ul>
-                    </li>
+
                     <li class="nav-parent"><a> <i class="fa fa-list-alt"
                                                   aria-hidden="true"></i><span>用户权限管理</span>
                     </a>
                         <ul class="nav nav-children">
-                            <li><a href="${pageContext.request.contextPath}/GoodsShowAllServlet"><span class="text">
+                            <li><a href="${pageContext.request.contextPath}/mgr/mgrs/all"><span class="text">
 										管理员</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/StockServlet"><span class="text">
+                            <li><a href="${pageContext.request.contextPath}/mgr/teacher/all"><span class="text">
 										老师</span></a></li>
-                            <li><a href="${pageContext.request.contextPath}/OutServlet"><span class="text">
+                            <li><a href="${pageContext.request.contextPath}/mgr/student/all"><span class="text">
 										学生</span></a></li>
                         </ul>
                     </li>

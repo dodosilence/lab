@@ -21,7 +21,7 @@ public class Teacher {
 
 
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher",fetch = FetchType.EAGER)
     private Set<Course> courses;
 
 
