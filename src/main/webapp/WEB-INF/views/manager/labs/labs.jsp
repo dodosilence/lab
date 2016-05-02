@@ -23,7 +23,15 @@
 
 <body>
 
-<c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+<c:if test="${sessionScope.user.role=='manager'}">
+    <c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role=='teacher'}">
+    <c:import url="/WEB-INF/views/teacher/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role!='teacher'&&sessionScope.user.role!='manager'}">
+    <c:import url="/WEB-INF/views/student/navigation.jsp"/>
+</c:if>
 
 
 <!-- Main Page -->
@@ -62,7 +70,9 @@
                             <th>课程量</th>
                             <th>设备数</th>
                             <th>模块数</th>
+                            <c:if test="${sessionScope.user.role=='manager'}">
                             <th>操作</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <c:forEach items="${laboratorys}" var="lab">
@@ -73,10 +83,12 @@
                                 <td>${fn:length(lab.courses)}</td>
                                 <td>${fn:length(lab.equipments)}</td>
                                 <td>${fn:length(lab.modules)}</td>
+                                <c:if test="${sessionScope.user.role=='manager'}">
                                 <td>
                                     <a href="javascript:deleteLab('${lab.uuid}');">删除</a>/<a
                                         href="${pageContext.request.contextPath}/mgr/labs/info/${lab.uuid}">详情</a>
                                 </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         <script>
@@ -108,67 +120,68 @@
 </div>
 <!--/container-->
 
-
-<div class="container-fluid content">
-    <div id="footer">
-        <div class="pull-right">
-            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新建</button>
-        </div>
-        <c:if test="${labstyle!=null}">
+<c:if test="${sessionScope.user.role=='manager'}">
+    <div class="container-fluid content">
+        <div id="footer">
             <div class="pull-right">
-                <button class="btn btn-danger" onclick="deleteLabstyle('${labstyle.uuid}')">删除</button>
+                <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
-        </c:if>
+            <c:if test="${labstyle!=null}">
+                <div class="pull-right">
+                    <button class="btn btn-danger" onclick="deleteLabstyle('${labstyle.uuid}')">删除</button>
+                </div>
+            </c:if>
+        </div>
     </div>
-</div>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">添加实验室</h4>
-            </div>
-            <div class="modal-body"><br>
-                <form id="form_add_lab">
-                    <div class="form-group">
-                        <label>实验室名称</label>
-                        <div class="input-group input-group-icon">
-                            <input type="text" name="labName" class="form-control bk-radius"
-                                   id="labName" placeholder="低于十个字符"/>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加实验室</h4>
+                </div>
+                <div class="modal-body"><br>
+                    <form id="form_add_lab">
+                        <div class="form-group">
+                            <label>实验室名称</label>
+                            <div class="input-group input-group-icon">
+                                <input type="text" name="labName" class="form-control bk-radius"
+                                       id="labName" placeholder="低于十个字符"/>
                     <span class="input-group-addon">
                         <span class="icon">
 						    <i class="fa fa-warning"></i>
                        </span>
 					</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label>位置</label>
-                        <div class="input-group input-group-icon">
-                            <input type="text" name="position" id="position" class="form-control bk-radius"
-                                   placeholder="低于六个字符"/>
+                        <div class="form-group">
+                            <label>位置</label>
+                            <div class="input-group input-group-icon">
+                                <input type="text" name="position" id="position" class="form-control bk-radius"
+                                       placeholder="低于六个字符"/>
                     <span class="input-group-addon">
                         <span class="icon">
 						    <i class="fa fa-warning"></i>
                        </span>
 					</span>
+                            </div>
                         </div>
-                    </div>
-                    <c:if test="${labstyle!=null}">
-                        <input type="hidden" name="labstyle" value="${labstyle.uuid}">
-                    </c:if>
-                    <input type="hidden" name="format" value="json">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-in" onclick="addLab()">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+                        <c:if test="${labstyle!=null}">
+                            <input type="hidden" name="labstyle" value="${labstyle.uuid}">
+                        </c:if>
+                        <input type="hidden" name="format" value="json">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-in" onclick="addLab()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</c:if>
 
 
 <c:import url="/WEB-INF/views/base/js.jsp"/>
@@ -184,7 +197,7 @@
                 success: function (data, textStatus) {
                     $("#myModal").modal("hide")
                     alert(data.message)
-                    location.href="${pageContext.request.contextPath}/mgr/labstyle/list/all"
+                    location.href = "${pageContext.request.contextPath}/mgr/labstyle/list/all"
                 },
 
                 complete: function (XMLHttpRequest, textStatus) {

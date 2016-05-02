@@ -1,14 +1,9 @@
 package cn.gc.lab.controller;
 
 import cn.gc.lab.controller.messagge.Message;
-import cn.gc.lab.entity.Course;
-import cn.gc.lab.entity.Laboratory;
-import cn.gc.lab.entity.Teacher;
-import cn.gc.lab.entity.User;
-import cn.gc.lab.repository.CourseRepository;
-import cn.gc.lab.repository.LaboratoryRepository;
-import cn.gc.lab.repository.TeacherRepository;
-import cn.gc.lab.repository.UserRepository;
+import cn.gc.lab.entity.*;
+import cn.gc.lab.repository.*;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +23,9 @@ public class CourseController {
     CourseRepository courseRepository;
     @Autowired
     LaboratoryRepository laboratoryRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     @RequestMapping("/list/all")
     public String list(Model model) {
@@ -63,4 +61,24 @@ public class CourseController {
         courseRepository.save(course);
         return Message.success();
     }
+
+
+    @RequestMapping("info/{courseId}")
+    public String courseInfo(@PathVariable("courseId") String courseId, Model model){
+
+        Course course = courseRepository.findOne(courseId);
+
+
+        model.addAttribute("course",course);
+        List<Student> students = studentRepository.findAll();
+        model.addAttribute("students",students);
+
+        return "manager/course/courseinfo";
+
+
+    }
+
+
+
+
 }

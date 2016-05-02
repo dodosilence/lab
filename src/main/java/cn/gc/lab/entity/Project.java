@@ -20,6 +20,16 @@ public class Project {
 
     private String projectName;
 
+    @Column(nullable = false)
+    private Integer status=0;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     @ManyToOne
     private Course course;

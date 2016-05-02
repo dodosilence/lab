@@ -37,6 +37,7 @@
                 <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
+
     </div>
     <!-- End Page Header -->
     <div class="row">
@@ -44,34 +45,29 @@
             <div class="panel panel-default bk-bg-white">
                 <div class="panel-heading bk-bg-white">
                     <h6>
-                        <i class="fa fa-table red"></i><span class="break"></span>课程
+                        <i class="fa fa-table red"></i><span class="break"></span>学生列表
                     </h6>
-                    <c:if test="${laboratory!=null}">
-                        <h6 class="pull-right">${laboratory.labName}</h6>
-                    </c:if>
+                    <h6 class="pull-right">${course.courseName}</h6>
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>名称</th>
-                            <th>所在实验室</th>
-                            <th>负责老师</th>
-                            <th>实验数</th>
-                            <th>上课学生数</th>
+                            <th>姓名</th>
+                            <th>年龄</th>
+                            <th>性别</th>
+                            <th>课程数</th>
                             <th>操作</th>
                         </tr>
                         </thead>
-                        <c:forEach items="${courses}" var="course">
+                        <c:forEach items="${course.students}" var="student">
                             <tr class="gradeX">
-                                <td>${course.courseName}</td>
-                                <td>${course.laboratory.labName}</td>
-                                <td>${course.teacher.user.truename}</td>
-                                <td>${fn:length(course.projects)}</td>
-                                <td>${fn:length(course.students)}</td>
+                                <td>${student.user.truename}</td>
+                                <td>${student.user.age}</td>
+                                <td><c:if test="${stu.user.gender==1}">男</c:if><c:if test="${stu.user.gender!=1}">女</c:if></td>
+                                <td>${fn:length(student.courses)}</td>
                                 <td>
-                                    <a href="javascript:deleteCourse('${course.uuid}');">删除</a>/
-                                    <a href="${pageContext.request.contextPath}/mgr/course/info/${course.uuid}">操作</a>
+                                    <a href="javascript:deleteCourse('${student.uuid}');">移除</a>/
                                 </td>
                             </tr>
                         </c:forEach>
@@ -79,7 +75,7 @@
                             function deleteCourse(eid) {
                                 if (confirm("确定删除?")) {
                                     $.ajax({
-                                        url: "${pageContext.request.contextPath}/mgr/course/delete/" + eid,    //请求的url地址
+                                        url: "${pageContext.request.contextPath}/mgr/course/delete/student/" + eid,    //请求的url地址
                                         dataType: "json",   //返回格式为json
                                         data: {format: 'json'},
                                         async: false, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -108,13 +104,9 @@
 <div class="container-fluid content">
     <div id="footer">
         <div class="pull-right">
-            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">添加设备</button>
+            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">添加学生</button>
         </div>
-        <c:if test="${laboratory!=null}">
-            <div class="pull-right">
-                <button class="btn btn-default" data-toggle="modal" data-target="#model_edit_lab">修改实验室信息</button>
-            </div>
-        </c:if>
+
     </div>
 </div>
 
@@ -192,50 +184,15 @@
                 <h4 class="modal-title">添加课程</h4>
             </div>
             <div class="modal-body"><br>
-                <form id="form_add_equip">
-                    <div class="form-group">
-                        <label>课程名</label>
-                        <div class="input-group input-group-icon">
-                            <input type="text" name="courseName" class="form-control bk-radius"
-                                   id="ename" placeholder="低于十个字符"/>
-                    <span class="input-group-addon">
-                        <span class="icon">
-						    <i class="fa fa-warning"></i>
-                       </span>
-					</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>所属实验室</label>
-                        <div class="input-group input-group-icon">
-                            <select class="form-control" name="labId">
-                                <c:forEach items="${laboratories}" var="lab">
-                                    <option value="${lab.uuid}">${lab.labName}</option>
-                                </c:forEach>
-                            </select>
-                    <span class="input-group-addon">
-                        <span class="icon">
-						    <i class="fa fa-warning"></i>
-                       </span>
-					</span>
-                        </div>
-                    </div>
+                <form id="form_add_equip" action="/mgr/course/addstu/${course.uuid}">
 
-                    <div class="form-group">
-                        <label>负责老师</label>
-                        <div class="input-group input-group-icon">
-                            <select class="form-control" name="teacherId">
-                                <c:forEach items="${teachers}" var="teacher">
-                                    <option value="${teacher.uuid}">${teacher.user.truename}</option>
-                                </c:forEach>
-                            </select>
-                    <span class="input-group-addon">
-                        <span class="icon">
-						    <i class="fa fa-warning"></i>
-                       </span>
-					</span>
-                        </div>
-                    </div>
+                    <c:forEach items=""
+                    <input type="checkbox" name="stu" class="form-group" value="">asdd
+                    <input type="checkbox" name="stu" class="form-group">asdd
+                    <input type="checkbox" name="stu" class="form-group">asdd
+                    <input type="checkbox" name="stu" class="form-group">asdd
+                    <input type="checkbox" name="stu" class="form-group">asdd
+
                     <input type="hidden" name="format" value="json">
                 </form>
             </div>

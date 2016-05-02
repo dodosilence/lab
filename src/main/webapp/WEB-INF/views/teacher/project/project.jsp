@@ -21,7 +21,15 @@
 
 <body>
 
-<c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+<c:if test="${sessionScope.user.role=='manager'}">
+    <c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role=='teacher'}">
+    <c:import url="/WEB-INF/views/teacher/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role!='teacher'&&sessionScope.user.role!='manager'}">
+    <c:import url="/WEB-INF/views/student/navigation.jsp"/>
+</c:if>
 
 <!-- Main Page -->
 <div class="main sidebar-minified">
@@ -39,8 +47,7 @@
     <!-- End Page Header -->
     <div class="row">
         <c:forEach items="${projects}" var="project">
-            <a href="${pageContext.request.contextPath}/mgr/project/info/${project.uuid}"><h6
-                    class="text-right bk-padding-top-20 bk-margin-off">
+
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="panel bk-widget bk-border-off">
                     <div class="panel-body bk-bg-very-light-gray">
@@ -50,20 +57,24 @@
                             </div>
                             <h1 class="bk-margin-off-top pull-right">${fn:length(project.projectEquMaps)}种设备</h1>
                         </div>
-                            <c:if test="${project.status<=0||project.status==null}">
-                                <span style="color: red;">未审核</span>
-                            </c:if>
-                            <c:if test="${project.status==1}">
-                                <span style="color: yellow;">未开始</span>
-                            </c:if>
-                            <c:if test="${project.status==2}">
-                                <span style="color: black;">已结束</span>
-                            </c:if>
+                        <a href="${pageContext.request.contextPath}/mgr/project/info/${project.uuid}">
+                            <h6 class="text-right bk-padding-top-20 bk-margin-off">
+
+                                <c:if test="${project.status<=0||project.status==null}">
+                                    <span style="color: red;">未审核</span>
+                                </c:if>
+                                <c:if test="${project.status==1}">
+                                    <span style="color: yellow;">未开始</span>
+                                </c:if>
+                                <c:if test="${project.status==2}">
+                                    <span style="color: black;">已结束</span>
+                                </c:if>
+                            </h6>
+                        </a>
 
                     </div>
                 </div>
             </div>
-            </h6></a>
 
         </c:forEach>
     </div>
@@ -156,7 +167,7 @@
                         <label>开始时间</label>
                         <div class="input-group input-group-icon">
                             <input type="date" name="startDateTime" class="form-control bk-radius"
-                                    placeholder="开始时间"/>
+                                   placeholder="开始时间"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -187,8 +198,8 @@
 
             type: "POST",
 
-            url:  $("#form_add_project").attr("action"),
-            data:  $("#form_add_project").serialize(),
+            url: $("#form_add_project").attr("action"),
+            data: $("#form_add_project").serialize(),
             success: function (data, textStatus) {
                 $("#myModal").modal("hide")
                 alert(data.message)
@@ -203,12 +214,6 @@
 
             }
         });
-
-
-
-
-
-
 
 
     }

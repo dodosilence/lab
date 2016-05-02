@@ -22,7 +22,7 @@
 	<!-- Start: Content -->
 	<div class="container-fluid content">
 		<div class="row">
-		<c:import url="/WEB-INF/views/base/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/teacher/navigation.jsp"/>
 
 			
 

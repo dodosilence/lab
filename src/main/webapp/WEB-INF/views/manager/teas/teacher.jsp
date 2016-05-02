@@ -61,7 +61,7 @@
                                 <td>${teacher.user.truename}</td>
                                 <td>${teacher.user.username}</td>
                                 <td>${teacher.user.age}</td>
-                                <td>${teacher.user.gender}</td>
+                                <td><c:if test="${stu.user.gender==1}">男</c:if><c:if test="${stu.user.gender!=1}">女</c:if></td>
                                 <td>${fn:length(teacher.courses)}</td>
                                 <td>
                                     <a href="javascript:deleteTeacher('${teacher.uuid}');">删除</a>

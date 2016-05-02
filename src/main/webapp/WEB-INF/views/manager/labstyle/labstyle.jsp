@@ -20,8 +20,15 @@
 </head>
 
 <body>
-
-<c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+<c:if test="${sessionScope.user.role=='manager'}">
+    <c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role=='teacher'}">
+    <c:import url="/WEB-INF/views/teacher/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role!='teacher'&&sessionScope.user.role!='manager'}">
+    <c:import url="/WEB-INF/views/student/navigation.jsp"/>
+</c:if>
 
 <!-- Main Page -->
 <div class="main sidebar-minified">
@@ -61,77 +68,80 @@
 
 <!-- Footer -->
 <!-- Start: Content -->
-<div class="container-fluid content">
-    <div id="footer">
-        <div class="desc pull-right">
-            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新建</button>
+
+
+<c:if test="${sessionScope.user.role=='manager'}">
+    <div class="container-fluid content">
+        <div id="footer">
+            <div class="desc pull-right">
+                <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新建</button>
+            </div>
         </div>
     </div>
-</div>
-<script>
-    function addLabstyle() {
-        if (!$("#styleName").attr("value").length < 1) {
-            $.ajax({
+    <script>
+        function addLabstyle() {
+            if (!$("#styleName").attr("value").length < 1) {
+                $.ajax({
 
-                type: "POST",
+                    type: "POST",
 
-                url: "${pageContext.request.contextPath}/mgr/labstyle/create.html",
-                data: {
-                    styleName: $("#styleName").attr("value"),
-                    format: 'json'
-                },
-                success: function (data, textStatus) {
-                    $("#myModal").modal("hide")
-                    alert(data.message)
-                    location.reload();
+                    url: "${pageContext.request.contextPath}/mgr/labstyle/create.html",
+                    data: {
+                        styleName: $("#styleName").attr("value"),
+                        format: 'json'
+                    },
+                    success: function (data, textStatus) {
+                        $("#myModal").modal("hide")
+                        alert(data.message)
+                        location.reload();
 
-                },
+                    },
 
-                complete: function (XMLHttpRequest, textStatus) {
+                    complete: function (XMLHttpRequest, textStatus) {
 
-                },
-                error: function () {
+                    },
+                    error: function () {
 
-                }
-            });
+                    }
+                });
 
 
-        } else {
-            alert("名称不可为空")
+            } else {
+                alert("名称不可为空")
+            }
+
         }
+    </script>
 
-    }
-</script>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body"><br>
-                <label>用户名</label>
-                <div class="input-group input-group-icon">
-                    <input type="text" name="username" class="form-control bk-radius"
-                           id="styleName" placeholder="Username or E-mail"/>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body"><br>
+                    <label>用户名</label>
+                    <div class="input-group input-group-icon">
+                        <input type="text" name="username" class="form-control bk-radius"
+                               id="styleName" placeholder="Username or E-mail"/>
                     <span class="input-group-addon">
                         <span class="icon">
 						    <i class="fa fa-warning"></i>
                        </span>
 					</span>
+                    </div>
+                    <br>
                 </div>
-                <br>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-in" onclick="addLabstyle()">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-in" onclick="addLabstyle()">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
 
-
+</c:if>
 <!-- start: JavaScript-->
 
 <!-- Vendor JS-->

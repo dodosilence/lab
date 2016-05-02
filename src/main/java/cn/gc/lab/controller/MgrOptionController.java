@@ -72,7 +72,7 @@ public class MgrOptionController {
         return Message.success();
     }
 
-    @RequestMapping(value = {"teacher/create"},method = RequestMethod.POST)
+    @RequestMapping(value = {"mgrs/create"},method = RequestMethod.POST)
     @ResponseBody
     public Object createMgr(User user){
         userRepository.save(user);
@@ -98,6 +98,8 @@ public class MgrOptionController {
         studentRepository.delete(stu);
         return Message.success();
     }
+
+
 
     @RequestMapping(value = {"student/create"},method = RequestMethod.POST)
     @ResponseBody

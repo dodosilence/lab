@@ -1,11 +1,10 @@
 package cn.gc.lab.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.ManyToAny;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by tristan on 16/4/9.
@@ -19,6 +18,17 @@ public class Student {
 
     @OneToOne
     private  User user;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Course> courses;
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
 
     public String getUuid() {
         return uuid;

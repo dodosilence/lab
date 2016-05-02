@@ -23,7 +23,15 @@
 
 <body>
 
-<c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+<c:if test="${sessionScope.user.role=='manager'}">
+    <c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role=='teacher'}">
+    <c:import url="/WEB-INF/views/teacher/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role!='teacher'&&sessionScope.user.role!='manager'}">
+    <c:import url="/WEB-INF/views/student/navigation.jsp"/>
+</c:if>
 
 
 <!-- Main Page -->
@@ -37,6 +45,7 @@
                 <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
+
     </div>
     <!-- End Page Header -->
     <div class="row">
@@ -57,8 +66,6 @@
                             <th>名称</th>
                             <th>所在实验室</th>
                             <th>负责老师</th>
-                            <th>实验数</th>
-                            <th>上课学生数</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -67,34 +74,11 @@
                                 <td>${course.courseName}</td>
                                 <td>${course.laboratory.labName}</td>
                                 <td>${course.teacher.user.truename}</td>
-                                <td>${fn:length(course.projects)}</td>
-                                <td>${fn:length(course.students)}</td>
                                 <td>
-                                    <a href="javascript:deleteCourse('${course.uuid}');">删除</a>/
-                                    <a href="${pageContext.request.contextPath}/mgr/course/info/${course.uuid}">操作</a>
+                                    <a href="${pageContext.request.contextPath}/mgr/course/info/${course.uuid}">详细</a>
                                 </td>
                             </tr>
                         </c:forEach>
-                        <script>
-                            function deleteCourse(eid) {
-                                if (confirm("确定删除?")) {
-                                    $.ajax({
-                                        url: "${pageContext.request.contextPath}/mgr/course/delete/" + eid,    //请求的url地址
-                                        dataType: "json",   //返回格式为json
-                                        data: {format: 'json'},
-                                        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                                        type: "POST",   //请求方式
-                                        success: function (req) {
-                                            //请求成功时处理
-                                            window.location.reload();
-                                        },
-                                        complete: function () {
-                                            //请求完成的处理
-                                        }
-                                    })
-                                }
-                            }
-                        </script>
                     </table>
 
 
@@ -104,19 +88,7 @@
     </div>
 
 </div>
-<!--/container-->
-<div class="container-fluid content">
-    <div id="footer">
-        <div class="pull-right">
-            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">添加设备</button>
-        </div>
-        <c:if test="${laboratory!=null}">
-            <div class="pull-right">
-                <button class="btn btn-default" data-toggle="modal" data-target="#model_edit_lab">修改实验室信息</button>
-            </div>
-        </c:if>
-    </div>
-</div>
+
 
 
 <c:if test="${laboratory!=null}">
