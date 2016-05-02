@@ -26,6 +26,7 @@ public class User {
 
     private String gender;
 
+    @Column(columnDefinition = "default '未署名'",nullable = false)
     private String truename;
 
     private Integer age;

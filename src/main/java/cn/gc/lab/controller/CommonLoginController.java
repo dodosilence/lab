@@ -90,6 +90,7 @@ public class CommonLoginController {
             user1.setPassword("root");
             user1.setRole("student");
             userRepository.save(user1);
+            student.setUser(user1);
             studentRepository.save(student);
         }
         

@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by tristan on 16/4/27.
@@ -39,7 +42,7 @@ public class CourseController {
 
     }
 
-    @RequestMapping(value = "/delete/{courseId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{courseId}", method = RequestMethod.POST)
     @ResponseBody
     public Object delete(@PathVariable("courseId") String courseId) {
         courseRepository.delete(courseId);
@@ -64,21 +67,53 @@ public class CourseController {
 
 
     @RequestMapping("info/{courseId}")
-    public String courseInfo(@PathVariable("courseId") String courseId, Model model){
+    public String courseInfo(@PathVariable("courseId") String courseId, Model model) {
 
         Course course = courseRepository.findOne(courseId);
 
 
-        model.addAttribute("course",course);
-        List<Student> students = studentRepository.findAll();
-        model.addAttribute("students",students);
+        model.addAttribute("course", course);
+        Set<Student> studentSet = course.getStudents();
+        ArrayList<String> uuids = new ArrayList<String>();
+        for (Student s:studentSet){
+            uuids.add(s.getUuid());
+        }
+
+        List<Student> students = studentRepository.findByUuidNotIn(uuids);
+        model.addAttribute("students", students);
 
         return "manager/course/courseinfo";
 
 
     }
 
+    @RequestMapping(value = "addstu/{courseId}", method = RequestMethod.POST)
+    @ResponseBody
+    @Transactional
+    public Object addstu(@PathVariable("courseId") String courseId, @RequestParam("stu") List<String> stus) {
+        Course course = courseRepository.findOne(courseId);
+        Set<Student> students = course.getStudents();
+        if (students == null) {
+            students = new HashSet<Student>();
+        }
+        for (String stu : stus) {
+            Student student = studentRepository.findOne(stu);
+            students.add(student);
+        }
+
+        courseRepository.save(course);
+        return Message.success();
+    }
 
 
+    @RequestMapping(value = "removeStu/{courseId}/{stuid}")
+    @ResponseBody
+    public Object remove(@PathVariable("courseId") String courseId, @PathVariable("stuid") String stuid) {
+        Course one = courseRepository.findOne(courseId);
+        Student student = studentRepository.findOne(stuid);
+        one.getStudents().remove(student);
+        courseRepository.save(one);
+        return Message.success();
+    }
 
 }

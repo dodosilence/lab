@@ -23,7 +23,15 @@
 
 <body>
 
-<c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+<c:if test="${sessionScope.user.role=='manager'}">
+    <c:import url="/WEB-INF/views/manager/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role=='teacher'}">
+    <c:import url="/WEB-INF/views/teacher/navigation.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.role!='teacher'&&sessionScope.user.role!='manager'}">
+    <c:import url="/WEB-INF/views/student/navigation.jsp"/>
+</c:if>
 
 
 <!-- Main Page -->
@@ -57,29 +65,33 @@
                             <th>年龄</th>
                             <th>性别</th>
                             <th>课程数</th>
+                            <c:if test="${sessionScope.user.role=='manager'}">
                             <th>操作</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <c:forEach items="${course.students}" var="student">
                             <tr class="gradeX">
                                 <td>${student.user.truename}</td>
                                 <td>${student.user.age}</td>
-                                <td><c:if test="${stu.user.gender==1}">男</c:if><c:if test="${stu.user.gender!=1}">女</c:if></td>
+                                <td><c:if test="${stu.user.gender==1}">男</c:if><c:if
+                                        test="${stu.user.gender!=1}">女</c:if></td>
                                 <td>${fn:length(student.courses)}</td>
+                                <c:if test="${sessionScope.user.role=='manager'}">
                                 <td>
-                                    <a href="javascript:deleteCourse('${student.uuid}');">移除</a>/
+                                    <a href="javascript:deleteCourse('${student.uuid}');">移除</a>
                                 </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         <script>
                             function deleteCourse(eid) {
-                                if (confirm("确定删除?")) {
+                                if (confirm("确定移除?")) {
                                     $.ajax({
-                                        url: "${pageContext.request.contextPath}/mgr/course/delete/student/" + eid,    //请求的url地址
+                                        url: "${pageContext.request.contextPath}/mgr/course/removeStu/${course.uuid}/" + eid,    //请求的url地址
                                         dataType: "json",   //返回格式为json
                                         data: {format: 'json'},
                                         async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                                        type: "POST",   //请求方式
                                         success: function (req) {
                                             //请求成功时处理
                                             window.location.reload();
@@ -101,6 +113,7 @@
 
 </div>
 <!--/container-->
+<c:if test="${sessionScope.user.role=='manager'}">
 <div class="container-fluid content">
     <div id="footer">
         <div class="pull-right">
@@ -109,6 +122,7 @@
 
     </div>
 </div>
+</c:if>
 
 
 <c:if test="${laboratory!=null}">
@@ -181,18 +195,14 @@
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">添加课程</h4>
+                <h4 class="modal-title">添加学生</h4>
             </div>
             <div class="modal-body"><br>
                 <form id="form_add_equip" action="/mgr/course/addstu/${course.uuid}">
 
-                    <c:forEach items=""
-                    <input type="checkbox" name="stu" class="form-group" value="">asdd
-                    <input type="checkbox" name="stu" class="form-group">asdd
-                    <input type="checkbox" name="stu" class="form-group">asdd
-                    <input type="checkbox" name="stu" class="form-group">asdd
-                    <input type="checkbox" name="stu" class="form-group">asdd
-
+                    <c:forEach items="${students}" var="stu">
+                        <input type="checkbox" name="stu" class="form-group" value="${stu.uuid}">${stu.user.truename}
+                    </c:forEach>
                     <input type="hidden" name="format" value="json">
                 </form>
             </div>
@@ -209,10 +219,9 @@
 <c:import url="/WEB-INF/views/base/js.jsp"/>
 <script>
     function addEquip() {
-        if ($("#ename").attr("value").length >= 1) {
             $.ajax({
                 type: "POST",
-                url: "${pageContext.request.contextPath}/mgr/course/create",
+                url: $("#form_add_equip").attr("action"),
                 data: $("#form_add_equip").serialize(),
                 success: function (data, textStatus) {
                     location.reload();
@@ -228,9 +237,7 @@
             });
 
 
-        } else {
-            alert("参数不可为空")
-        }
+
     }
 </script>
 

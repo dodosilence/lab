@@ -22,20 +22,22 @@ public class Course {
     private Teacher teacher;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Student> students;
 
 
-    @OneToMany(mappedBy = "course",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private Set<Project> projects;
 
     public Set<Student> getStudents() {
         return students;
     }
 
+
     public void setStudents(Set<Student> students) {
         this.students = students;
     }
+
 
     public Set<Project> getProjects() {
         return projects;

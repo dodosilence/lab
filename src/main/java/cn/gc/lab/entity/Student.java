@@ -19,7 +19,7 @@ public class Student {
     @OneToOne
     private  User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "students")
     private Set<Course> courses;
 
     public Set<Course> getCourses() {
