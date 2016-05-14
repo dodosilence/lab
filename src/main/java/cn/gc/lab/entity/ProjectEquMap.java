@@ -2,10 +2,7 @@ package cn.gc.lab.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by tristan on 16/4/9.
@@ -28,7 +25,16 @@ public class ProjectEquMap {
     private Integer count;
 
     private Integer status;
+@Column(columnDefinition = "int default 0")
+    private Integer broken;
 
+    public Integer getBroken() {
+        return broken;
+    }
+
+    public void setBroken(Integer broken) {
+        this.broken = broken;
+    }
 
     public String getUuid() {
         return uuid;

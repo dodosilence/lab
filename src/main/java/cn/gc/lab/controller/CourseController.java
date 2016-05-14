@@ -75,11 +75,17 @@ public class CourseController {
         model.addAttribute("course", course);
         Set<Student> studentSet = course.getStudents();
         ArrayList<String> uuids = new ArrayList<String>();
-        for (Student s:studentSet){
+        for (Student s : studentSet) {
             uuids.add(s.getUuid());
         }
+        List<Student> students;
+        if (uuids.size() > 0) {
 
-        List<Student> students = studentRepository.findByUuidNotIn(uuids);
+            students = studentRepository.findByUuidNotIn(uuids);
+        } else {
+            students = studentRepository.findAll();
+        }
+
         model.addAttribute("students", students);
 
         return "manager/course/courseinfo";

@@ -1,6 +1,9 @@
 package cn.gc.lab.controller;
 
+import cn.gc.lab.service.HomeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -9,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("teacher")
 @Controller
 public class TeacherHomeController {
+    @Autowired
+    HomeService homeService;
 
     @RequestMapping("index.html")
-    public String teacherIndex() {
+    public String teacherIndex(Model model) {
+        homeService.IndexData(model);
 
 
-        return "teacher/index";
+        return "index/index";
     }
 }

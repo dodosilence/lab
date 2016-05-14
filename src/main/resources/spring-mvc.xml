@@ -25,17 +25,18 @@
     
     <!-- 静态资源不进行映射 -->
     <default-servlet-handler/>
-    <!--<interceptors>-->
-        <!--<interceptor>-->
-            <!--<mapping path="/**"/>-->
-            <!--<exclude-mapping path="/assets/**"/>-->
-            <!--<exclude-mapping path="/page-login.html"/>-->
-            <!--<exclude-mapping path="/page-register.html"/>-->
-            <!--<exclude-mapping path="/login.do"/>-->
+    <interceptors>
+        <interceptor>
+            <mapping path="/**"/>
+            <exclude-mapping path="/assets/**"/>
+            <exclude-mapping path="/page-login.html"/>
+            <exclude-mapping path="/page-register.html"/>
+            <exclude-mapping path="/login.do"/>
+            <exclude-mapping path="/login/code"/>
 
-            <!--&lt;!&ndash; 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 &ndash;&gt;-->
-            <!--<beans:bean class="cn.gc.lab.interceptor.LoginInterceptor"/>-->
-        <!--</interceptor>-->
+            <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+            <beans:bean class="cn.gc.lab.interceptor.LoginInterceptor"/>
+        </interceptor>
 
         <!--<interceptor>-->
             <!--<mapping path="/teacher/**"/>-->
@@ -57,7 +58,7 @@
         <!--</interceptor>-->
 
 
-    <!--</interceptors>-->
+    </interceptors>
 
 
     <!-- jsp的视图解析器 -->
@@ -73,6 +74,11 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="defaultEncoding" value="utf-8"></beans:property>
+        <beans:property name="maxUploadSize" value="10485760000"></beans:property>
+        <beans:property name="maxInMemorySize" value="40960"></beans:property>
+    </beans:bean>
 
     <view-controller path="/page-login.html" view-name="root/page-login"/>
     <view-controller path="/page-register.html" view-name="root/page-register"/>

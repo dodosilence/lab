@@ -11,8 +11,7 @@
     <!-- Basic -->
     <meta charset="UTF-8"/>
 
-    <title>总体预览 | Fire - Admin Template</title>
-
+    <title>实验室管理</title>
     <!-- Mobile Metas -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -40,9 +39,8 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
-                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
+                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>实验室列表</a></li>
             </ol>
         </div>
 
@@ -52,12 +50,20 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default bk-bg-white">
                 <div class="panel-heading bk-bg-white">
-                    <h6>
-                        <p class="fa fa-table red"></p><span class="break"></span>实验室列表
-                    </h6>
+
+
+                    <form id="search" action="/mgr/labs/list/all" method="get" style="padding: 20px">
+                                <input type="text" name="keyword" class="form-control bk-radius"
+                                       id="name" placeholder="输入关键词"/>
+                        <input type="hidden" name="format" value="json">
+                    </form>
+
+
                     <c:if test="${labstyle!=null}">
                         <h6 class="pull-right">${labstyle.styleName}</h6>
                     </c:if>
+
+
                 </div>
 
                 <div class="panel-body">
@@ -71,7 +77,7 @@
                             <th>设备数</th>
                             <th>模块数</th>
                             <c:if test="${sessionScope.user.role=='manager'}">
-                            <th>操作</th>
+                                <th>操作</th>
                             </c:if>
                         </tr>
                         </thead>
@@ -84,10 +90,10 @@
                                 <td>${fn:length(lab.equipments)}</td>
                                 <td>${fn:length(lab.modules)}</td>
                                 <c:if test="${sessionScope.user.role=='manager'}">
-                                <td>
-                                    <a href="javascript:deleteLab('${lab.uuid}');">删除</a>/<a
-                                        href="${pageContext.request.contextPath}/mgr/labs/info/${lab.uuid}">详情</a>
-                                </td>
+                                    <td>
+                                        <a href="javascript:deleteLab('${lab.uuid}');">删除</a>/<a
+                                            href="${pageContext.request.contextPath}/mgr/labs/info/${lab.uuid}">详情</a>
+                                    </td>
                                 </c:if>
                             </tr>
                         </c:forEach>
