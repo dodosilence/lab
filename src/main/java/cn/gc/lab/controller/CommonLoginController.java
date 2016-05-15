@@ -14,9 +14,7 @@ import cn.gc.lab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
@@ -31,26 +29,17 @@ public class CommonLoginController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "login.do", method = RequestMethod.POST)
+    @RequestMapping("login.do")
     public String login(@RequestParam(value = "username", required = true) String username,
-                        @RequestParam(value = "password", required = true) String password,
-                        HttpSession session,
-                        @RequestParam(value = "code", required = true) String code,
-                        Model model) throws Exception {
+                        @RequestParam(value = "password", required = true) String password, HttpSession session) throws Exception {
         initOneUser();
         User user = null;
-        if (!code.equals(session.getAttribute("code").toString())) {
-            model.addAttribute("msg", "验证码错误");
-            return "/root/page-login";
-        } else {
-            try {
-                user = userService.findByUsernamePassword(username, password);
-            } catch (ServiceException e) {
-                model.addAttribute("msg", e.getMessage());
-                return "/root/page-login";
-            }
+        try {
+            user = userService.findByUsernamePassword(username, password);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
         }
-            session.setAttribute("user", user);
+        session.setAttribute("user", user);
         return "redirect:index.html";
     }
 
@@ -86,14 +75,13 @@ public class CommonLoginController {
             user.setUsername("manager");
             user.setPassword("root");
             user.setRole("manager");
-            user.setTruename("manager");
             userRepository.save(user);
             manager.setUser(user);
             managerRepository.save(manager);
 
         }
-
-        //设置学生登陆的用户和密码    用户名：student 密码：root
+        
+       //设置学生登陆的用户和密码    用户名：student 密码：root
         User stu = userRepository.findOneByUsername("student");
         if (stu == null) {
             Student student = new Student();
@@ -101,12 +89,11 @@ public class CommonLoginController {
             user1.setUsername("student");
             user1.setPassword("root");
             user1.setRole("student");
-            user1.setTruename("student");
             userRepository.save(user1);
             student.setUser(user1);
             studentRepository.save(student);
         }
-
+        
         //设置教师登陆的用户和密码    用户名：teacher 密码：root
         User tea = userRepository.findOneByUsername("teacher");
         if (tea == null) {
@@ -115,7 +102,6 @@ public class CommonLoginController {
             user2.setUsername("teacher");
             user2.setPassword("root");
             user2.setRole("teacher");
-            user2.setTruename("teacher");
 
             userRepository.save(user2);
 

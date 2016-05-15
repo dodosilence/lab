@@ -11,7 +11,7 @@
     <!-- Basic -->
     <meta charset="UTF-8"/>
 
-    <title>实验室管理</title>
+    <title>总体预览 | Fire - Admin Template</title>
 
     <!-- Mobile Metas -->
     <meta name="viewport"
@@ -29,8 +29,9 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>实验列表</a></li>
+                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
+                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
 
@@ -38,41 +39,31 @@
     <!-- End Page Header -->
     <div class="row">
         <c:forEach items="${projects}" var="project">
-
-
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                        <div class="panel bk-widget bk-border-off">
-                            <div class="panel-body bk-bg-very-light-gray">
-                                <h4 class="bk-margin-off-bottom bk-docs-font-weight-300">${project.projectName}(${project.course.courseName})</h4>
-                                <div class="clearfix  bk-padding-top-10">
-                                    <div class="pull-right bk-margin-left-15">
-                                    </div>
-                                    <h1 class="bk-margin-off-top pull-right">${fn:length(project.projectEquMaps)}种设备</h1>
-
-                                    <span style="font-size: 10px"> ${project.startDateTime}-${project.endDateTime}</span>
-                                </div>
-                                <a href="${pageContext.request.contextPath}/mgr/project/info/${project.uuid}">
-                                    <h6 class="text-right bk-padding-top-20 bk-margin-off">
-
-                                        <c:if test="${project.status<=0||project.status==null}">
-                                            <span style="color: red;">未审核</span>
-                                        </c:if>
-                                        <c:if test="${project.status==1}">
-                                            <span style="color: yellow;">未开始</span>
-                                        </c:if>
-                                        <c:if test="${project.status==2}">
-                                            <span style="color: black;">进行中</span>
-                                        </c:if>
-                                        <c:if test="${project.status==3}">
-                                            <span style="color: black;">已结束</span>
-                                        </c:if>
-                                    </h6>
-                                </a>
-
+            <a href="${pageContext.request.contextPath}/mgr/project/info/${project.uuid}"><h6
+                    class="text-right bk-padding-top-20 bk-margin-off">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                <div class="panel bk-widget bk-border-off">
+                    <div class="panel-body bk-bg-very-light-gray">
+                        <h4 class="bk-margin-off-bottom bk-docs-font-weight-300">${project.projectName}(${project.course.courseName})</h4>
+                        <div class="clearfix  bk-padding-top-10">
+                            <div class="pull-right bk-margin-left-15">
                             </div>
+                            <h1 class="bk-margin-off-top pull-right">${fn:length(project.projectEquMaps)}种设备</h1>
                         </div>
-                    </div>
+                            <c:if test="${project.status<=0||project.status==null}">
+                                <span style="color: red;">未审核</span>
+                            </c:if>
+                            <c:if test="${project.status==1}">
+                                <span style="color: yellow;">未开始</span>
+                            </c:if>
+                            <c:if test="${project.status==2}">
+                                <span style="color: black;">已结束</span>
+                            </c:if>
 
+                    </div>
+                </div>
+            </div>
+            </h6></a>
 
         </c:forEach>
     </div>
@@ -164,14 +155,14 @@
                     <div class="form-group">
                         <label>开始时间</label>
                         <div class="input-group input-group-icon">
-                            <input type="datetime-local" name="startDateTime" class="form-control bk-radius"
-                                   placeholder="开始时间"/>
+                            <input type="date" name="startDateTime" class="form-control bk-radius"
+                                    placeholder="开始时间"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>结束时间</label>
                         <div class="input-group input-group-icon">
-                            <input type="datetime-local" name="endDateTime" class="form-control bk-radius"
+                            <input type="date" name="endDateTime" class="form-control bk-radius"
                                    placeholder="结束时间"/>
                         </div>
                     </div>
@@ -196,8 +187,8 @@
 
             type: "POST",
 
-            url: $("#form_add_project").attr("action"),
-            data: $("#form_add_project").serialize(),
+            url:  $("#form_add_project").attr("action"),
+            data:  $("#form_add_project").serialize(),
             success: function (data, textStatus) {
                 $("#myModal").modal("hide")
                 alert(data.message)
@@ -212,6 +203,12 @@
 
             }
         });
+
+
+
+
+
+
 
 
     }

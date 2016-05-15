@@ -11,7 +11,8 @@
     <!-- Basic -->
     <meta charset="UTF-8"/>
 
-    <title>实验室管理</title>
+    <title>总体预览 | Fire - Admin Template</title>
+
     <!-- Mobile Metas -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -31,8 +32,9 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>课程管理</a></li>
+                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
+                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
     </div>

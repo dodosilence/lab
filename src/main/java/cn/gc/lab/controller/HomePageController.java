@@ -11,7 +11,6 @@ import cn.gc.lab.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -26,7 +25,7 @@ public class HomePageController {
 
 
     @RequestMapping({"/", "index","index.html"})
-    public String homePage(HttpSession session, Model model) {
+    public String homePage(HttpSession session) {
         String homePage = null;
 
         User user = (User) session.getAttribute("user");
@@ -43,7 +42,6 @@ public class HomePageController {
         } else {
             homePage = "redirect:page-login.html";
         }
-
         return homePage;
     }
 

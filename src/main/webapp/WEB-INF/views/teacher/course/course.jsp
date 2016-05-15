@@ -40,8 +40,9 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>课程管理</a></li>
+                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
+                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
 
@@ -65,7 +66,6 @@
                             <th>名称</th>
                             <th>所在实验室</th>
                             <th>负责老师</th>
-                            <th>学生数</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -74,7 +74,6 @@
                                 <td>${course.courseName}</td>
                                 <td>${course.laboratory.labName}</td>
                                 <td>${course.teacher.user.truename}</td>
-                                <td>${fn:length(course.students)}</td>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/mgr/course/info/${course.uuid}">详细</a>
                                 </td>

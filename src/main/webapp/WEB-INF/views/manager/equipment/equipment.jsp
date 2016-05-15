@@ -11,7 +11,8 @@
     <!-- Basic -->
     <meta charset="UTF-8"/>
 
-    <title>实验室管理</title>
+    <title>总体预览 | Fire - Admin Template</title>
+
     <!-- Mobile Metas -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -39,8 +40,9 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>设备管理</a></li>
+                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
+                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
 
@@ -83,20 +85,12 @@
                                 <c:if test="${sessionScope.user.role=='manager'}">
                                     <td>
                                         <a href="javascript:deleteEquip('${equip.uuid}');">删除</a>/
-                                        <a href="javascript:showUpdate('${equip.uuid}','${equip.eName}','${equip.usefullCount}','${equip.price}');" >操作</a>
+                                        <a href="${pageContext.request.contextPath}/mgr/equip/info/${equip.uuid}">操作</a>
                                     </td>
                                 </c:if>
                             </tr>
                         </c:forEach>
                         <script>
-                            function showUpdate(id,name,count,price) {
-                                $("#ename").attr("value",name)
-                                $("#count").attr("value",count)
-                                $("#price").attr("value",price)
-                                $("#form_add_equip").attr("action","${pageContext.request.contextPath}/mgr/equip/update/"+id);
-                                $("#myModal").modal("show")
-                            }
-
                             function deleteEquip(eid) {
                                 if (confirm("确定删除该设备?这会清除掉所有关于它的信息?")) {
                                     $.ajax({
@@ -125,13 +119,12 @@
     </div>
 
 </div>
-
 <c:if test="${sessionScope.user.role=='manager'}">
     <!--/container-->
     <div class="container-fluid content">
         <div id="footer">
             <div class="pull-right">
-                <button class="btn btn-default" data-toggle="modal" onclick="addEquipMent()">添加设备</button>
+                <button class="btn btn-default" data-toggle="modal" data-target="#myModal">添加设备</button>
             </div>
             <c:if test="${laboratory!=null}">
                 <div class="pull-right">
@@ -140,16 +133,9 @@
             </c:if>
         </div>
     </div>
-    <script>
-        function  addEquipMent() {
-            $("#form_add_equip").attr("action","/mgr/equip/create");
-            $("#myModal").modal("show")
-            
-        }
-
-    </script>
 </c:if>
 
+<c:if test="${laboratory!=null}">
     <div class="modal fade" id="model_edit_lab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -211,6 +197,7 @@
         </div><!-- /.modal-dialog -->
     </div>
 
+</c:if>
 
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -303,7 +290,7 @@
         if ($("#ename").attr("value").length >= 1 && $("#count").attr("value") >= 0) {
             $.ajax({
                 type: "POST",
-                url: $("#form_add_equip").attr("action"),
+                url: "${pageContext.request.contextPath}/mgr/equip/create",
                 data: $("#form_add_equip").serialize(),
                 success: function (data, textStatus) {
                     $("#myModal").modal("hide")

@@ -37,8 +37,9 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>实验列表</a></li>
+                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
+                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
 
@@ -56,7 +57,6 @@
                             </div>
                             <h1 class="bk-margin-off-top pull-right">${fn:length(project.projectEquMaps)}种设备</h1>
                         </div>
-                           <span style="font-size: 10px"> ${project.startDateTime}-${project.endDateTime}</span>
                         <a href="${pageContext.request.contextPath}/mgr/project/info/${project.uuid}">
                             <h6 class="text-right bk-padding-top-20 bk-margin-off">
 
@@ -67,9 +67,6 @@
                                     <span style="color: yellow;">未开始</span>
                                 </c:if>
                                 <c:if test="${project.status==2}">
-                                    <span style="color: black;">进行中</span>
-                                </c:if>
-                                <c:if test="${project.status==3}">
                                     <span style="color: black;">已结束</span>
                                 </c:if>
                             </h6>
@@ -169,15 +166,15 @@
                     <div class="form-group">
                         <label>开始时间</label>
                         <div class="input-group input-group-icon">
-                            <input type="datetime" name="startDateTime" class="form-control bk-radius"
-                                   placeholder="开始时间(yyyy-MM-dd HH:mm:ss)"/>
+                            <input type="date" name="startDateTime" class="form-control bk-radius"
+                                   placeholder="开始时间"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>结束时间</label>
                         <div class="input-group input-group-icon">
-                            <input type="datetime" name="endDateTime" class="form-control bk-radius"
-                                   placeholder="结束时间(yyyy-MM-dd HH:mm:ss)"/>
+                            <input type="date" name="endDateTime" class="form-control bk-radius"
+                                   placeholder="结束时间"/>
                         </div>
                     </div>
 

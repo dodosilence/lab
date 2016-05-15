@@ -11,7 +11,7 @@
     <!-- Basic -->
     <meta charset="UTF-8"/>
 
-    <title>实验室管理</title>
+    <title>总体预览 | Fire - Admin Template</title>
 
     <!-- Mobile Metas -->
     <meta name="viewport"
@@ -40,8 +40,9 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>实验详情</a></li>
+                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
+                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
             </ol>
         </div>
 
@@ -67,7 +68,6 @@
                             <th>所在实验室</th>
                             <th>需求数</th>
                             <th>可用数</th>
-                            <th>损坏数</th>
                             <c:if test="${sessionScope.user.role=='teacher'}">
                                 <th>操作</th>
                             </c:if>
@@ -80,92 +80,15 @@
                                 <td>${p.equipment.laboratory.labName}</td>
                                 <td>${p.count}</td>
                                 <td>${p.equipment.usefullCount}</td>
-                                <td>${p.broken}
-                                    <c:if test="${project.status==2}">
-                                        <a href="javascript:broken('${p.uuid}');">---添加损坏</a>
-                                    </c:if>
-                                </td>
                                 <c:if test="${sessionScope.user.role=='teacher'}">
                                     <td>
-                                        <c:if test="${project.status>=1}"> 不可更改</c:if>
-                                        <c:if test="${project.status<1}">
-                                            <a href="javascript:deleteEquip('${p.uuid}');">删除</a>/
-                                            <a href="javascript:changeCount('${p.uuid}','${p.count}');">修改数量</a>
-                                        </c:if>
-
+                                        <a href="javascript:deleteEquip('${p.uuid}');">删除</a>/
+                                        <a href="javascript:changeCount('${p.uuid}','${p.count}');">修改数量</a>
                                     </td>
                                 </c:if>
                             </tr>
                         </c:forEach>
-                        <div class="modal fade" id="broken" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-                                        </button>
-                                        <h4 class="modal-title">添加损坏</h4>
-                                    </div>
-                                    <div class="modal-body"><br>
-                                        <form id="form_do_brok"
-                                              action="${pageContext.request.contextPath}/mgr/project/broken"
-                                              method="post">
-                                            <div class="form-group">
-                                                <label>损坏了</label>
-                                                <div class="input-group input-group-icon">
-                                                    <input type="number" name="broken" class="form-control bk-radius"
-                                                           id="lname" placeholder="输入整数"/>
-                    <span class="input-group-addon">
-                        <span class="icon">
-						    <i class="fa fa-warning"></i>
-                       </span>
-					</span>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="format" value="json">
-                                            <input type="hidden" name="mapid" value="" id="mapid">
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
-                                        <button type="button" class="btn btn-in" onclick="dobroken()">Save changes
-                                        </button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div>
                         <script>
-
-
-                            function broken(mapuuid) {
-                                $("#mapid").attr("value",mapuuid)
-                                $("#broken").modal("show")
-                            }
-
-                            function dobroken() {
-                                $.ajax({
-                                    type: "POST",
-                                    url: $("#form_do_brok").attr("action"),
-                                    data: $("#form_do_brok").serialize(),
-                                    success: function (data, textStatus) {
-                                        location.reload();
-                                    },
-
-                                    complete: function (XMLHttpRequest, textStatus) {
-
-                                    },
-                                    error: function () {
-                                        window.reload()
-
-                                    }
-                                });
-
-                            }
-
-
-
 
                             function changeCount(pid, count) {
                                 $("#pmapid").attr("value", pid)
@@ -195,152 +118,13 @@
                     </table>
 
 
-                    <c:if test="${sessionScope.user.role=='manager'&&project.status==0}">
-                        <button style="margin-left: 10px;" onclick="doPublish('${project.uuid}')"
-                                class="btn btn-default">审核通过
-                        </button>
-                        <script>
-                            function doPublish(projectId) {
-                                if (confirm("确定发布?")) {
-                                    $.ajax({
-                                        url: "${pageContext.request.contextPath}/mgr/project/publish/" + projectId,    //请求的url地址
-                                        dataType: "json",   //返回格式为json
-                                        data: {format: 'json'},
-                                        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                                        type: "POST",   //请求方式
-                                        success: function (req) {
-                                            //请求成功时处理
-                                            window.location.reload();
-                                        },
-                                        complete: function () {
-                                            //请求完成的处理
-                                        }
-                                    })
-                                }
-                            }
-
-                        </script>
-                    </c:if>
-
-                    <c:if test="${sessionScope.user.role=='teacher'&&project.status==1}">
-                        <button style="margin-left: 10px;" onclick="doPublish('${project.uuid}')"
-                                class="btn btn-default">开始课程
-                        </button>
-                        <script>
-                            function doPublish(projectId) {
-                                if (confirm("确定开始?")) {
-                                    $.ajax({
-                                        url: "${pageContext.request.contextPath}/mgr/project/start/" + projectId,    //请求的url地址
-                                        dataType: "json",   //返回格式为json
-                                        data: {format: 'json'},
-                                        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                                        type: "POST",   //请求方式
-                                        success: function (req) {
-                                            //请求成功时处理
-                                            window.location.reload();
-                                        },
-                                        complete: function () {
-                                            //请求完成的处理
-                                        }
-                                    })
-                                }
-                            }
-
-                        </script>
-                    </c:if>
-                    <c:if test="${sessionScope.user.role=='teacher'&&project.status==2}">
-                        <button style="margin-left: 10px;" onclick="doPublish('${project.uuid}')"
-                                class="btn btn-default">结束课程
-                        </button>
-
-                        <script>
-                            function doPublish(projectId) {
-                                if (confirm("确定结束?")) {
-                                    $.ajax({
-                                        url: "${pageContext.request.contextPath}/mgr/project/end/" + projectId,    //请求的url地址
-                                        dataType: "json",   //返回格式为json
-                                        data: {format: 'json'},
-                                        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                                        type: "POST",   //请求方式
-                                        success: function (req) {
-                                            //请求成功时处理
-                                            window.location.reload();
-                                        },
-                                        complete: function () {
-                                            //请求完成的处理
-                                        }
-                                    })
-                                }
-                            }
-
-                        </script>
-                    </c:if>
-
-                    <c:if test="${sessionScope.user.role=='student'&&project.status==2}">
-                        <button style="margin-left: 10px;" onclick="doPublishs()"
-                                class="btn btn-default">提交实验报告
-                        </button>
-
-
-                        <div class="modal fade" id="model_sub" tabindex="-1" role="dialog"
-                             aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-                                        </button>
-                                        <h4 class="modal-title">修改数量</h4>
-                                    </div>
-                                    <div class="modal-body"><br>
-                                        <form id="form_sub" action="/student/project/report" method="post"
-                                              enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label>实验报告</label>
-                                                <div class="input-group input-group-icon">
-                                                    <input type="file" name="report">
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="format" value="json">
-                                            <input type="hidden" name="pid" id="project_id" value="${project.uuid}">
-                                            <input type="hidden" name="sid" value="${sessionScope.user.uuid}">
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                                        </button>
-                                        <button type="button" class="btn btn-in" onclick="report()">提交
-                                        </button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div>
-
-                        <script>
-                            function doPublishs() {
-                                $("#model_sub").modal("show")
-                            }
-
-                            function report() {
-                                $("#form_sub").submit()
-                            }
-
-                        </script>
-                    </c:if>
-                    <button style="margin-left: 10px;" onclick="location.href='/mgr/project/reports/${project.uuid}'"
-                            class="btn btn-default">察看报告
-                    </button>
-
-
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-<div class="modal fade" id="model_edit_lab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="model_edit_lab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -374,7 +158,8 @@
     </div><!-- /.modal-dialog -->
 </div>
 <script>
-    function changeCountCommit() {
+    function  changeCountCommit() {
+        alert("ssss")
         $.ajax({
             url: $("#form_add_lab").attr("action"),    //请求的url地址
             dataType: "json",   //返回格式为json
@@ -393,7 +178,7 @@
     }
 
 </script>
-<c:if test="${sessionScope.user.role=='teacher'&&project.status<=0}">
+<c:if test="${sessionScope.user.role=='teacher'}">
     <!--/container-->
     <div class="container-fluid content">
         <div id="footer">
@@ -404,8 +189,7 @@
     </div>
 </c:if>
 
-<div class="modal fade" id="model_add_stu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="model_add_stu" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -480,6 +264,8 @@
 <div class="clearfix"></div>
 <c:import url="/WEB-INF/views/base/js.jsp"/>
 <script>
+
+
     function updateLabInfo() {
         $.ajax({
             type: "POST",

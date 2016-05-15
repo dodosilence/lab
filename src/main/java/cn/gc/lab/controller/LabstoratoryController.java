@@ -1,18 +1,20 @@
 package cn.gc.lab.controller;
 
 import cn.gc.lab.controller.messagge.Message;
+import cn.gc.lab.entity.Equipment;
 import cn.gc.lab.entity.Laboratory;
 import cn.gc.lab.entity.Labstyle;
 import cn.gc.lab.repository.EquipmentRepository;
 import cn.gc.lab.repository.LaboratoryRepository;
 import cn.gc.lab.repository.LabstyleRepository;
 import cn.gc.lab.service.LaboratoryService;
+import org.dom4j.rule.Mode;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,15 +48,8 @@ public class LabstoratoryController {
 
 
     @RequestMapping("/list/all")
-    public String labListAll(String keyword, Model model) {
-
-        List<Laboratory> laboratories=new ArrayList<Laboratory>();
-        if (keyword != null&&!"".equals(keyword)) {
-            laboratories=laboratoryRepository.findByLabNameLike("%"+keyword+"%");
-        } else {
-
-           laboratories= laboratoryRepository.findAll();
-        }
+    public String labListAll(Model model) {
+        List<Laboratory> laboratories = laboratoryRepository.findAll();
         model.addAttribute("laboratorys", laboratories);
         return "manager/labs/labs";
     }
@@ -97,7 +92,7 @@ public class LabstoratoryController {
     public Object updateInfo(@PathVariable("uuid") String uuid,
                              @RequestParam(value = "lname", required = false) String name,
                              @RequestParam(value = "position", required = false) String position,
-                             @RequestParam(value = "style", required = false) String style) {
+                             @RequestParam(value = "style", required = false) String  style) {
         boolean res = laboratoryService.update(uuid, name, position, style);
 
         if (res) {

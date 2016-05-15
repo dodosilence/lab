@@ -1,7 +1,6 @@
 import cn.gc.lab.entity.*;
 import cn.gc.lab.repository.*;
 
-import cn.gc.lab.service.HomeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +36,15 @@ public class EntityTest {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    HomeService homeService;
     @Test
     public void testCourse() {
-        String mgrcount = userRepository.mgrcount();
+        //Course course = courseRepository.findOneByTeacher_Courses_CourseNameIn(Arrays.asList("ss","dd"));
+        User user = new User();
+        user.setUsername("username");
+        user.setPassword("password");
+        user.setTruename("ssss");
+
+        userRepository.save(user);
 
 
     }
