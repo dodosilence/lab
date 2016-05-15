@@ -20,10 +20,13 @@ public class Equipment {
 
     private String eName;
 
+    @Column(columnDefinition = "int default 0")
     private Integer usefullCount=0;
 
+    @Column(columnDefinition = "int default 0")
     private Integer brokenCount=0;
 
+    @Column(columnDefinition = "int default 0")
     private Integer borrowdCount=0;
 
     @OneToMany(mappedBy = "equipment", fetch = FetchType.EAGER)

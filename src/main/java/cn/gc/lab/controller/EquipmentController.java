@@ -37,12 +37,16 @@ public class EquipmentController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseBody
     public Object insertEquip(@RequestParam(required = true) String ename, @RequestParam(required = false) Double price, @RequestParam(required = false) Integer count, String labUuid) {
-        Laboratory laboratory = laboratoryRepository.findOne(labUuid);
+
         Equipment equipment = new Equipment();
+        if (labUuid != null) {
+
+            Laboratory laboratory = laboratoryRepository.findOne(labUuid);
+            equipment.setLaboratory(laboratory);
+        }
         equipment.seteName(ename);
         equipment.setPrice(price);
         equipment.setUsefullCount(count);
-        equipment.setLaboratory(laboratory);
         equipmentRepository.save(equipment);
         return Message.success();
     }
@@ -51,6 +55,23 @@ public class EquipmentController {
     @ResponseBody
     public Object deleteEquip(@PathVariable("euuid") String uuid) {
         equipmentRepository.delete(uuid);
+        return Message.success();
+    }
+
+
+    @RequestMapping("update/{eid}")
+    @ResponseBody
+    public Object updateE(@PathVariable("eid") String eid,@RequestParam(required = true) String ename, @RequestParam(required = false) Double price, @RequestParam(required = false) Integer count, String labUuid){
+        Equipment equipment = equipmentRepository.findOne(eid);
+        if (labUuid != null) {
+            Laboratory laboratory = laboratoryRepository.findOne(labUuid);
+            equipment.setLaboratory(laboratory);
+        }
+        equipment.seteName(ename);
+        equipment.setPrice(price);
+        equipment.setUsefullCount(count);
+
+        equipmentRepository.save(equipment);
         return Message.success();
     }
 

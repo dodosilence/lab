@@ -4,6 +4,7 @@ import cn.gc.lab.entity.Laboratory;
 import cn.gc.lab.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -14,4 +15,11 @@ public interface LaboratoryRepository extends JpaRepository<Laboratory, String>,
     List<Laboratory> findByLabstyle_Uuid(String labstyleUuid);
 
 
+
+    List<Laboratory> findByLabName(String keyword);
+
+    List<Laboratory> findByLabNameLike(String keyword);
+
+    @Query(nativeQuery = true,value = "SELECT count(uuid) FROM LABORATORY")
+    int countLabs();
 }

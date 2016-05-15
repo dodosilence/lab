@@ -16,7 +16,7 @@ public class Student {
     @GeneratedValue(generator = "uuid")
     private String uuid;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private  User user;
 
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "students")

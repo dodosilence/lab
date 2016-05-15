@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><a href="${pageContext.request.contextPath}/UserProfileServlet"><i
+                            <li><a href="${pageContext.request.contextPath}/student/info"><i
                                     class="fa fa-user"></i>
                                 信息</a></li>
                             <li><a

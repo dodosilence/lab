@@ -11,8 +11,7 @@
     <!-- Basic -->
     <meta charset="UTF-8"/>
 
-    <title>总体预览 | Fire - Admin Template</title>
-
+    <title>实验室管理</title>
     <!-- Mobile Metas -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -40,9 +39,8 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
-                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
+                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>课程信息</a></li>
             </ol>
         </div>
 
@@ -66,7 +64,7 @@
                             <th>性别</th>
                             <th>课程数</th>
                             <c:if test="${sessionScope.user.role=='manager'}">
-                            <th>操作</th>
+                                <th>操作</th>
                             </c:if>
                         </tr>
                         </thead>
@@ -78,9 +76,9 @@
                                         test="${stu.user.gender!=1}">女</c:if></td>
                                 <td>${fn:length(student.courses)}</td>
                                 <c:if test="${sessionScope.user.role=='manager'}">
-                                <td>
-                                    <a href="javascript:deleteCourse('${student.uuid}');">移除</a>
-                                </td>
+                                    <td>
+                                        <a href="javascript:deleteCourse('${student.uuid}');">移除</a>
+                                    </td>
                                 </c:if>
                             </tr>
                         </c:forEach>
@@ -114,80 +112,16 @@
 </div>
 <!--/container-->
 <c:if test="${sessionScope.user.role=='manager'}">
-<div class="container-fluid content">
-    <div id="footer">
-        <div class="pull-right">
-            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">添加学生</button>
+    <div class="container-fluid content">
+        <div id="footer">
+            <div class="pull-right">
+                <button class="btn btn-default" data-toggle="modal" data-target="#myModal">添加学生</button>
+            </div>
+
         </div>
-
     </div>
-</div>
 </c:if>
 
-
-<c:if test="${laboratory!=null}">
-    <div class="modal fade" id="model_edit_lab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">修改实验室信息</h4>
-                </div>
-                <div class="modal-body"><br>
-                    <form id="form_edit_lab"
-                          action="${pageContext.request.contextPath}/mgr/labs/update/${laboratory.uuid}">
-                        <div class="form-group">
-                            <label>名称</label>
-                            <div class="input-group input-group-icon">
-                                <input type="text" name="lname" class="form-control bk-radius"
-                                       id="lname" placeholder="低于十个字符" value="${laboratory.labName}"/>
-                    <span class="input-group-addon">
-                        <span class="icon">
-						    <i class="fa fa-warning"></i>
-                       </span>
-					</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>位置</label>
-                            <div class="input-group input-group-icon">
-                                <input type="text" name="position" id="position" class="form-control bk-radius"
-                                       placeholder="输入位置" value="${laboratory.position}"/>
-                    <span class="input-group-addon">
-                        <span class="icon">
-						    <i class="fa fa-warning"></i>
-                       </span>
-					</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>类型</label>
-                            <select class="form-control" name="style">
-                                <c:forEach items="${labstyles}" var="style">
-                                    <option value="${style.uuid}"
-                                            <c:if test="${laboratory.labstyle.uuid==style.uuid}">
-                                                selected
-                                            </c:if>
-
-
-                                    >${style.styleName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <input type="hidden" name="format" value="json">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-in" onclick="updateLabInfo()">Save changes</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-
-</c:if>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -199,11 +133,13 @@
             </div>
             <div class="modal-body"><br>
                 <form id="form_add_equip" action="/mgr/course/addstu/${course.uuid}">
-
+                    <div style="text-align: center">
                     <c:forEach items="${students}" var="stu">
-                        <input type="checkbox" name="stu" class="form-group" value="${stu.uuid}">${stu.user.truename}
+                    <input type="checkbox" name="stu" class="form-group" value="${stu.uuid}"><span
+                        style="width: 30px;font-size: 20px">${stu.user.truename}</span><br>
                     </c:forEach>
                     <input type="hidden" name="format" value="json">
+                        </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -219,23 +155,22 @@
 <c:import url="/WEB-INF/views/base/js.jsp"/>
 <script>
     function addEquip() {
-            $.ajax({
-                type: "POST",
-                url: $("#form_add_equip").attr("action"),
-                data: $("#form_add_equip").serialize(),
-                success: function (data, textStatus) {
-                    location.reload();
-                },
+        $.ajax({
+            type: "POST",
+            url: $("#form_add_equip").attr("action"),
+            data: $("#form_add_equip").serialize(),
+            success: function (data, textStatus) {
+                location.reload();
+            },
 
-                complete: function (XMLHttpRequest, textStatus) {
+            complete: function (XMLHttpRequest, textStatus) {
 
-                },
-                error: function () {
-                    window.reload()
+            },
+            error: function () {
+                window.reload()
 
-                }
-            });
-
+            }
+        });
 
 
     }

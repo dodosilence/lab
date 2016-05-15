@@ -9,7 +9,8 @@
 <head>
     <!-- Basic -->
     <meta charset="UTF-8"/>
-    <title>总体预览 | Fire - Admin Template</title>
+    <title>实验室管理</title>
+
     <!-- Mobile Metas -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -28,9 +29,8 @@
     <div class="page-header">
         <div class="pull-left">
             <ol class="breadcrumb visible-sm visible-md visible-lg">
-                <li><a href="index.html"><i class="icon fa fa-home"></i>Home</a></li>
-                <li><a href="#"><i class="fa fa-table"></i>Tables</a></li>
-                <li class="active"><i class="fa fa-thumbs-o-up"></i>Advanced</li>
+                <li><a href="/index.html"><i class="icon fa fa-home"></i>主页</a></li>
+                <li><a href="#"><i class="fa fa-table"></i>教师列表</a></li>
             </ol>
         </div>
 
@@ -40,9 +40,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default bk-bg-white">
                 <div class="panel-heading bk-bg-white">
-                    <h6>
-                        <i class="fa fa-table red"></i><span class="break"></span>老师列表
-                    </h6>
+
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered table-striped">
@@ -52,6 +50,7 @@
                             <th>登录名</th>
                             <th>年龄</th>
                             <th>性别</th>
+                            <th>手机</th>
                             <th>负责课程数</th>
                             <th>操作</th>
                         </tr>
@@ -62,6 +61,7 @@
                                 <td>${teacher.user.username}</td>
                                 <td>${teacher.user.age}</td>
                                 <td><c:if test="${stu.user.gender==1}">男</c:if><c:if test="${stu.user.gender!=1}">女</c:if></td>
+                                <td>${teacher.user.phone}</td>
                                 <td>${fn:length(teacher.courses)}</td>
                                 <td>
                                     <a href="javascript:deleteTeacher('${teacher.uuid}');">删除</a>
